@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import argparse
 from functools import cmp_to_key
 from sys import stdin, stdout
@@ -114,14 +115,16 @@ def value_compare(value1: Value, value2: Value) -> int:
     bleu_diff = value1.bleu_difference - value2.bleu_difference
     attention_max = np.max(value1.attention_max) - np.max(value2.attention_max)
 
-    if attention_max != 0:
-        return np.sign(attention_max)
-    else:
+    if bleu_diff != 0:
         return np.sign(bleu_diff)
+    else:
+        return np.sign(attention_max)
 
 
 def array_to_string(array: np.ndarray) -> str:
-    strings = ['{0:.2f}'.format(a) for a in array]
+    sorted_array = np.sort(array)
+    sorted_array = sorted_array[::-1]
+    strings = ['{0:.2f}'.format(a) for a in sorted_array]
     return ' '.join(strings)
 
 

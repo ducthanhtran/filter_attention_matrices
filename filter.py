@@ -1,6 +1,6 @@
 import argparse
 from sys import stdin
-from typing import List, NamedTuple
+from typing import List
 
 import numpy as np
 
